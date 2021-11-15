@@ -1,0 +1,83 @@
+<div class="bg-light w-100 position-relative">
+    <header>
+        <div class="container-fluid d-flex align-items-center py-3 align-items-center justify-content-between">
+            <div class="d-flex">
+                <h1 class="booking-header my-auto">Booking.com</h1>
+
+                <h3 class="mx-3 border-start propName pl-3 my-auto">Grand</h3>
+            </div>
+
+            <div class="d-lg-flex d-none">
+                <form class="d-flex align-items-center">
+                    <input class="form-control search-input me-2" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn" type="submit">
+                        <svg focusable="false" fill="currentColor" height="19" width="19" role="presentation"
+                            fill="white" aria-hidden="true" viewBox="0 0 24 24"
+                            class="ext-search-input__icon ext-search-input__icon--white bk-icon -streamline-magnifying_glass">
+                            <path
+                                d="M17.464 6.56a8.313 8.313 0 1 1-15.302 6.504A8.313 8.313 0 0 1 17.464 6.56zm1.38-.586C16.724.986 10.963-1.339 5.974.781.988 2.9-1.337 8.662.783 13.65c2.12 4.987 7.881 7.312 12.87 5.192 4.987-2.12 7.312-7.881 5.192-12.87zM15.691 16.75l7.029 7.03a.75.75 0 0 0 1.06-1.06l-7.029-7.03a.75.75 0 0 0-1.06 1.06z">
+                            </path>
+                        </svg>
+                    </button>
+                </form>
+                <div class="d-flex flex-column align-items-center mx-3">
+                    <svg focusable="false" fill="currentColor" height="20" width="20" role="presentation" fill="white"
+                        viewBox="0 0 24 24" aria-hidden="true" slot="icon"
+                        class="ext-action-menu__avatar--icon bk-icon -streamline-account_user">
+                        <path
+                            d="M16.5 9.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0zm1.5 0a6 6 0 1 0-12 0 6 6 0 0 0 12 0zm1.445 10.597c-4.086-4.111-10.732-4.132-14.844-.046l-.046.046a.75.75 0 0 0 1.064 1.058l.04-.04a8.996 8.996 0 0 1 12.722.04.75.75 0 0 0 1.064-1.058zM22.5 12c0 5.799-4.701 10.5-10.5 10.5S1.5 17.799 1.5 12 6.201 1.5 12 1.5 22.5 6.201 22.5 12zm1.5 0c0-6.627-5.373-12-12-12S0 5.373 0 12s5.373 12 12 12 12-5.373 12-12z">
+                        </path>
+                    </svg>
+                    <h4 class="my-auto">Account</h4>
+                </div>
+            </div>
+
+        </div>
+        <div class="container d-flex justify-content-start ">
+            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mr-3" (click)="homeRedirect()">
+                <svg width="30" role="presentation" viewBox="0 0 24 24" aria-hidden="true" height="30"
+                    fill="currentColor" focusable="false" class="bk-icon -streamline-house">
+                    <path
+                        d="M3 18v3.75A2.25 2.25 0 0 0 5.25 24h4.5a.75.75 0 0 0 .75-.75v-6a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 .75.75v6c0 .414.336.75.75.75h4.5A2.25 2.25 0 0 0 21 21.75V18a.75.75 0 0 0-1.5 0v3.75a.75.75 0 0 1-.75.75h-4.5l.75.75v-6A2.25 2.25 0 0 0 12.75 15h-1.5A2.25 2.25 0 0 0 9 17.25v6l.75-.75h-4.5a.75.75 0 0 1-.75-.75V18A.75.75 0 0 0 3 18zm-1.72-.97L11.47 6.841a.75.75 0 0 1 1.06 0l10.19 10.19a.75.75 0 1 0 1.06-1.061L13.591 5.78a2.25 2.25 0 0 0-3.182 0L.219 15.97a.75.75 0 1 0 1.061 1.06zm15.97-7.28v-1.5L16.5 9h3.75l-.75-.75v5.25a.75.75 0 0 0 1.5 0V8.25a.75.75 0 0 0-.75-.75H16.5a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 0 1.5 0zM16.522.3l-.407.543a1.793 1.793 0 0 0 .279 2.461c.12.102.14.28.045.406l-.411.548a.75.75 0 1 0 1.2.9l.407-.543a1.793 1.793 0 0 0-.279-2.461.295.295 0 0 1-.045-.406l.411-.548a.75.75 0 1 0-1.2-.9zm3.75 0l-.407.543a1.793 1.793 0 0 0 .279 2.461c.12.102.14.28.045.406l-.411.548a.75.75 0 1 0 1.2.9l.407-.543a1.793 1.793 0 0 0-.279-2.461.295.295 0 0 1-.045-.406l.411-.548a.75.75 0 1 0-1.2-.9z">
+                    </path>
+                </svg>
+                <h4 class="my-auto">Home</h4>
+            </div>
+            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mx-3" routerLink="/bookings">
+                <svg aria-hidden="true" viewBox="0 0 24 24" role="presentation" width="30" height="30"
+                    fill="currentColor" focusable="false" class="bk-icon -streamline-list">
+                    <path
+                        d="M4.5 2.998a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0zm-1.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0zm-1.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0zm2.25-16.5h15a.75.75 0 0 0 0-1.5h-15a.75.75 0 0 0 0 1.5zm0 9h15a.75.75 0 0 0 0-1.5h-15a.75.75 0 0 0 0 1.5zm0 9h15a.75.75 0 0 0 0-1.5h-15a.75.75 0 0 0 0 1.5z">
+                    </path>
+                </svg>
+                <h4 class="my-auto">Reservations</h4>
+            </div>
+            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mx-3" routerLink="/inbox">
+                <svg role="presentation" width="30" viewBox="0 0 24 24" aria-hidden="true" height="30"
+                    fill="currentColor" focusable="false" class="bk-icon -streamline-email">
+                    <path
+                        d="M22.5 12v6a.75.75 0 0 1-.75.75H2.25A.75.75 0 0 1 1.5 18V6a.75.75 0 0 1 .75-.75h19.5a.75.75 0 0 1 .75.75v6zm1.5 0V6a2.25 2.25 0 0 0-2.25-2.25H2.25A2.25 2.25 0 0 0 0 6v12a2.25 2.25 0 0 0 2.25 2.25h19.5A2.25 2.25 0 0 0 24 18v-6zm-8.822-1.474l3.813 3.525a.75.75 0 1 0 1.018-1.102l-3.813-3.525a.75.75 0 1 0-1.018 1.102zM7.804 9.424L3.99 12.95a.75.75 0 1 0 1.018 1.102l3.813-3.525a.75.75 0 1 0-1.018-1.102zm14.65-5.027l-9.513 6.56a1.656 1.656 0 0 1-1.882 0l-9.513-6.56A.75.75 0 1 0 .694 5.63l9.513 6.56a3.156 3.156 0 0 0 3.586 0l9.513-6.56a.75.75 0 1 0-.852-1.234z">
+                    </path>
+                </svg>
+                <h4 class="my-auto">Inbox</h4>
+            </div>
+            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mx-3" routerLink="/reviews">
+                <svg height="30" role="presentation" width="30" aria-hidden="true" viewBox="0 0 24 24" focusable="false"
+                    fill="currentColor" class="bk-icon -streamline-heart_outline">
+                    <path
+                        d="M12.541 21.325l-9.588-10a4.923 4.923 0 1 1 6.95-6.976l1.567 1.566a.75.75 0 0 0 1.06 0l1.566-1.566a4.923 4.923 0 0 1 6.963 6.962l-9.6 10.014h1.082zm-1.082 1.038a.75.75 0 0 0 1.082 0l9.59-10.003a6.418 6.418 0 0 0-.012-9.07 6.423 6.423 0 0 0-9.083-.001L11.47 4.854h1.06l-1.566-1.566a6.423 6.423 0 1 0-9.082 9.086l9.577 9.99z">
+                    </path>
+                </svg>
+                <h4 class="my-auto">Reviews</h4>
+            </div>
+        </div>
+    </header>
+    <div class="container my-5 ">
+        <router-outlet></router-outlet>
+    </div>
+
+    <footer class="d-flex justify-content-center w-100">
+        <h3 class="py-3">&copy; Copyrights Booking.com 2021</h3>
+    </footer>
+</div>

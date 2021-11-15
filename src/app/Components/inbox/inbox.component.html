@@ -1,0 +1,36 @@
+<div class="my-5">
+    <h1>Messagess for your property</h1>
+    <div class="col-8">
+        <div class="my-2" *ngFor="let message of allMessages ; let i = index">
+            <div class="row rounded-1 messages container py-5 d-flex flex-column">
+                <div class="col-5 d-flex ">
+                    <img class="personal-image" src="assets/photo-1604223190546-a43e4c7f29d7.jpg" alt="">
+                    <div class="d-flex flex-column  mx-3">
+                        <h3 class="my-0">{{message.userId}}</h3>
+                        <h5>lore</h5>
+                    </div>
+
+                </div>
+                <div class="d-flex flex-column">
+                    <mat-card class="w-75">
+                        {{message.body}}
+                    </mat-card>
+                    <div *ngIf="allReplys[i]">
+                        <div *ngFor="let reply of allReplys[i]">
+                            <mat-card class="w-75 ms-auto my-2  reply">
+                                {{reply}}
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+                <mat-form-field class="example-full-width mt-4 w-100" appearance="outline">
+                    <mat-label>Leave a reply</mat-label>
+                    <textarea #replay class="w-100" matInput placeholder="Ex. It makes me feel..."></textarea>
+                </mat-form-field>
+                <button mat-stroked-button color="primary" (click)="leaveReply(message._id,replay,i)">Replay</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>

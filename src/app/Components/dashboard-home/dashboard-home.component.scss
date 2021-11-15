@@ -1,0 +1,33 @@
+$main: #003580;
+* {
+  // font: "Segoe UI";
+}
+.booking-header {
+}
+.propName {
+  border-left: 1px solid white;
+}
+header {
+  background-color: $main;
+  color: white;
+  box-sizing: border-box !important;
+}
+.search-input {
+  background-color: #12499c !important;
+  ::placeholder {
+    color: white !important;
+  }
+}
+.nav-element:hover {
+  background-color: #1f53a2;
+  transition-duration: 0.2s;
+}
+.nav-element {
+  cursor: pointer;
+}
+footer {
+  background-color: $main;
+  position: absolute;
+  bottom: 0;
+  color: white;
+}

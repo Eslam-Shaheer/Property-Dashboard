@@ -1,0 +1,24 @@
+<div>
+    <h1 class="my-4">Guest reviews</h1>
+    <div class="bg-white pr-3 pl-3 pt-3 col-8" style="border-radius: 4px;">
+        <div *ngFor="let review of propReviews">
+            <div class="row">
+                <div class="col-5 d-flex justify-content-between">
+                    <img class="personal-image" src="assets/photo-1604223190546-a43e4c7f29d7.jpg" alt="">
+                    <div class="d-flex flex-column  ">
+                        <h3 class="my-0">{{review.userId}}</h3>
+                        <h5>Egypt</h5>
+                        <span class=" bg-primary_color badge-rating ">{{review.starRating}}.0</span>
+                    </div>
+
+                </div>
+                <div class="col-7">
+                    {{review.body}}
+
+                </div>
+
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
