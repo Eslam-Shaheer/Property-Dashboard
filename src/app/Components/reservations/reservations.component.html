@@ -1,6 +1,6 @@
 <div>
     <h1 class="mb-4">Reservations</h1>
-    <div class="mat-elevation-z8">
+    <div *ngIf="bookings" class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" class="w-100 ">
 
 
@@ -46,6 +46,16 @@
             aria-label="Select page of periodic elements">
         </mat-paginator>
     </div>
-
+    <div *ngIf="!bookings">
+        <div class="d-flex  my-5 py-5 justify-content-lg-center align-items-center flex-column">
+            <svg data-test-id="default-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="70px"
+                fill="#888888" height="70px" class="bui-empty-state__icon">
+                <path
+                    d="M13.629 22.5H2.25a.75.75 0 0 1-.75-.75V2.25a.75.75 0 0 1 .75-.75h19.5a.75.75 0 0 1 .75.75v11.379a.75.75 0 0 1-.22.53L14.16 22.28a.75.75 0 0 1-.53.219zm0 1.5a2.25 2.25 0 0 0 1.59-.659l8.122-8.122A2.25 2.25 0 0 0 24 13.63V2.25A2.25 2.25 0 0 0 21.75 0H2.25A2.25 2.25 0 0 0 0 2.25v19.5A2.25 2.25 0 0 0 2.25 24h11.379zM15 23.115V15.75a.75.75 0 0 1 .75-.75h7.365a.75.75 0 0 0 0-1.5H15.75a2.25 2.25 0 0 0-2.25 2.25v7.365a.75.75 0 0 0 1.5 0z">
+                </path>
+            </svg>
+            <h4 class="my-4" style="color:#888888">You haven't received any bookings</h4>
+        </div>
+    </div>
 
 </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HotelService } from 'src/app/Services/hotel.service';
 import { NgForm } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.component.html',
@@ -10,25 +11,31 @@ import { SharedService } from 'src/app/Services/shared.service';
 export class InboxComponent implements OnInit {
   constructor(
     private hotelService: HotelService,
-    private shared: SharedService
+    private shared: SharedService,
+    private route: ActivatedRoute
   ) {
-    this.shared.id.subscribe((id) => {
-      this.propId = id;
-    });
+    // this.shared.id.subscribe((id) => {
+    //   this.propId = id;
+    // });
   }
+
   allMessages: any[] = [];
   allReplys: any[] = [];
   replay: string = '';
   propId: any;
   ngOnInit(): void {
+    this.propId = localStorage.getItem('propId');
+
     this.hotelService
       .getAllMessagesByHotelId(this.propId)
       .subscribe((result) => {
         this.allMessages = result.data;
-        for (let i = 0; i < this.allMessages.length; i++) {
-          this.allReplys[i] = this.allMessages[i].replay;
+        console.log(this.allMessages);
+        if (this.allMessages) {
+          for (let i = 0; i < this.allMessages.length; i++) {
+            this.allReplys[i] = this.allMessages[i].replay;
+          }
         }
-        console.log(this.allReplys);
       });
   }
   leaveReply(id: any, replay: any, index: number) {

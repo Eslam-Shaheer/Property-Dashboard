@@ -25,26 +25,26 @@ export class ReservationsComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-  porpId: any;
+  bookings: any;
+  propId: any;
   constructor(
     private hotelService: HotelService,
     private shared: SharedService
   ) {}
 
   ngOnInit(): void {
-    this.shared.id.subscribe((id) => {
-      this.porpId = id;
-    });
+    this.propId = localStorage.getItem('propId');
 
     this.hotelService
-      .getAllBookingsByHotelId(this.porpId)
+      .getAllBookingsByHotelId(this.propId)
       .pipe(map((Data) => Data.data))
       .subscribe((result) => {
         console.log(result);
         this.dataSource.data = result;
+        this.bookings = result;
       });
     this.hotelService
-      .getAllMessagesByHotelId(this.porpId)
+      .getAllMessagesByHotelId(this.propId)
       .pipe(map((Data) => (Data.data.replay.length = 0)));
     console.log(this.dataSource);
   }

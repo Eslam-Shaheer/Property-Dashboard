@@ -11,9 +11,25 @@ import { ReservationsComponent } from './Components/reservations/reservations.co
 import { ReviewsComponent } from './Components/reviews/reviews.component';
 import { HomeComponent } from './Components/home/home.component';
 import { InboxComponent } from './Components/inbox/inbox.component';
+import { HotelFormComponent } from './Components/hotel-form/hotel-form.component';
+import { CampgroundFormComponent } from './Components/campground-form/campground-form.component';
+import { ApartmentFormComponent } from './Components/apartment-form/apartment-form.component';
+import { AddPropertyHomePageComponent } from './Components/add-property-home-page/add-property-home-page.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, DashboardHomeComponent, ReservationsComponent, ReviewsComponent, HomeComponent, InboxComponent],
+  declarations: [
+    AppComponent,
+    DashboardHomeComponent,
+    ReservationsComponent,
+    ReviewsComponent,
+    HomeComponent,
+    InboxComponent,
+    HotelFormComponent,
+    CampgroundFormComponent,
+    ApartmentFormComponent,
+    AddPropertyHomePageComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,6 +37,8 @@ import { InboxComponent } from './Components/inbox/inbox.component';
     BrowserAnimationsModule,
     MatrialModule,
     NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

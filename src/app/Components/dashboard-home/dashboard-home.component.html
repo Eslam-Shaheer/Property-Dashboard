@@ -1,4 +1,4 @@
-<div class="bg-light w-100 position-relative">
+<div class="bg-light w-100 view">
     <header>
         <div class="container-fluid d-flex align-items-center py-3 align-items-center justify-content-between">
             <div class="d-flex">
@@ -44,7 +44,7 @@
                 </svg>
                 <h4 class="my-auto">Home</h4>
             </div>
-            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mx-3" routerLink="/bookings">
+            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mx-3" (click)="bookingsRedirect()">
                 <svg aria-hidden="true" viewBox="0 0 24 24" role="presentation" width="30" height="30"
                     fill="currentColor" focusable="false" class="bk-icon -streamline-list">
                     <path
@@ -53,7 +53,7 @@
                 </svg>
                 <h4 class="my-auto">Reservations</h4>
             </div>
-            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mx-3" routerLink="/inbox">
+            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mx-3" (click)="inboxRedirect()">
                 <svg role="presentation" width="30" viewBox="0 0 24 24" aria-hidden="true" height="30"
                     fill="currentColor" focusable="false" class="bk-icon -streamline-email">
                     <path
@@ -62,7 +62,7 @@
                 </svg>
                 <h4 class="my-auto">Inbox</h4>
             </div>
-            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mx-3" routerLink="/reviews">
+            <div class="d-flex col-1 flex-column align-items-center nav-element p-3 mx-3" (click)="reviewsRedirect()">
                 <svg height="30" role="presentation" width="30" aria-hidden="true" viewBox="0 0 24 24" focusable="false"
                     fill="currentColor" class="bk-icon -streamline-heart_outline">
                     <path
@@ -73,11 +73,12 @@
             </div>
         </div>
     </header>
-    <div class="container my-5 ">
+    <div class="container my-5">
         <router-outlet></router-outlet>
-    </div>
 
+    </div>
     <footer class="d-flex justify-content-center w-100">
         <h3 class="py-3">&copy; Copyrights Booking.com 2021</h3>
     </footer>
+
 </div>

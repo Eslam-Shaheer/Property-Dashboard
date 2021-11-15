@@ -43,8 +43,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 const matrials = [
+  
   MatDatepickerModule,
   MatButtonModule,
   MatFormFieldModule,
@@ -85,6 +87,7 @@ const matrials = [
   MatPaginatorModule,
   MatSortModule,
   MatTableModule,
+  NgxMaterialTimepickerModule,
 ];
 @NgModule({
   imports: [matrials],

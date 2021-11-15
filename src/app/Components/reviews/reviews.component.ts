@@ -9,18 +9,16 @@ import { SharedService } from 'src/app/Services/shared.service';
   styleUrls: ['./reviews.component.scss'],
 })
 export class ReviewsComponent implements OnInit {
-  porpId: any;
+  propId: any;
   constructor(
     private hotelService: HotelService,
     private shared: SharedService
   ) {}
   propReviews: any[] = [];
   ngOnInit(): void {
-    this.shared.id.subscribe((id) => {
-      this.porpId = id;
-    });
+    this.propId = localStorage.getItem('propId');
     this.hotelService
-      .getAllReviewsByHotelId('618d35845f031f20b84c3ec7')
+      .getAllReviewsByHotelId(this.propId)
       .pipe(map((res) => res.data))
       .subscribe((result) => {
         this.propReviews = result;

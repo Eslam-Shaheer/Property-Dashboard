@@ -23,26 +23,29 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.propId = params.get('id');
-      this.shared.id.next(this.propId);
-      console.log(this.propId);
-      this.hotelService
-        .getAllBookingsByHotelId(this.propId)
-        .pipe(map((Data) => Data.data))
-        .subscribe((result) => {
-          this.latestBookings = result.slice(0, 3);
-        });
+      localStorage.setItem('propId', this.propId);
+    });
+    console.log(this.propId);
+    this.hotelService
+      .getAllBookingsByHotelId(this.propId)
+      .pipe(map((Data) => Data.data))
+      .subscribe((result) => {
+        if (result) this.latestBookings = result.slice(0, 3);
+      });
 
-      this.hotelService
-        .getAllMessagesByHotelId(this.propId)
-        .pipe(map((Data) => Data.data))
-        .subscribe((result) => {
+    this.hotelService
+      .getAllMessagesByHotelId(this.propId)
+      .pipe(map((Data) => Data.data))
+      .subscribe((result) => {
+        if (result) {
           for (let i = 0; i < result.length; i++) {
             if (result[i].replay.length <= 0) {
               this.unAnswerdMsgs[i] = result[i];
             }
           }
-          console.log(this.unAnswerdMsgs);
-        });
-    });
+        }
+
+        console.log(this.unAnswerdMsgs);
+      });
   }
 }

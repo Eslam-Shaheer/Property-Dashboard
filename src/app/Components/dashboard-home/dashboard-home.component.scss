@@ -4,6 +4,9 @@ $main: #003580;
 }
 .booking-header {
 }
+.view {
+  height: max-content;
+}
 .propName {
   border-left: 1px solid white;
 }
@@ -27,7 +30,10 @@ header {
 }
 footer {
   background-color: $main;
-  position: absolute;
-  bottom: 0;
+
+  margin-bottom: 0;
+  // width: 100%;
+  // height: 60px; /* Height of the footer */
+
   color: white;
 }
