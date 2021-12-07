@@ -189,7 +189,7 @@ export class CampgroundService {
   }
 
   //review api
-  getAllReviewsByHotelId(campID: any): Observable<any> {
+  getAllReviewsByCampId(campID: any): Observable<any> {
     return this.http.get<any>(
       environment.Api + 'campground/review/' + campID,
       this.httpOptions
@@ -212,6 +212,13 @@ export class CampgroundService {
     return this.http.put<any>(
       environment.Api + 'campground/review/' + campID + '/' + reviewId,
       review,
+      this.httpOptions
+    );
+  }
+  createReplay(propId: any, messageId: any, replay: any): Observable<any> {
+    return this.http.post<any>(
+      environment.Api + 'campground/message/replay/' + propId + '/' + messageId,
+      replay,
       this.httpOptions
     );
   }

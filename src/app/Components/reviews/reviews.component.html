@@ -1,27 +1,39 @@
-<div>
-    <h1 class="my-4">Guest reviews</h1>
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container py-5">
+    <div class="row w-50 align-items-center justify-content-between" *ngIf="propReviews.length>0&&!isLoading">
+        <h1>Guest reviews</h1>
+        <h2>{{totalReviews}} Reviews </h2>
+        <h2><span
+                class=" bg-primary_color badge-rating ">{{avgReviews.toString().split('').splice(0,3).join('')}}</span>
+        </h2>
+    </div>
+
     <div>
-        <div *ngFor="let review of propReviews" class="bg-white pr-3 pl-3 pt-3 col-8" style="border-radius: 4px;">
-            <div class="row">
-                <div class="col-5 d-flex justify-content-between">
-                    <img class="personal-image" src="assets/photo-1604223190546-a43e4c7f29d7.jpg" alt="">
+        <div *ngFor="let review of propReviews" class=" pr-3  pt-3 col-8" style="border-radius: 4px;">
+            <div class="row bg-white  rounded-5 py-3">
+                <div class="col-4 d-flex justify-content-evenly">
+                    <img class="personal-image col-4" [src]="review.userId.personalImage" alt="">
+
                     <div class="d-flex flex-column  ">
-                        <h3 class="my-0">{{review.userId}}</h3>
-                        <h5>Egypt</h5>
+                        <h3 class="my-0">{{review.userId.username}}</h3>
+                        <h5>{{review.userId.country}}</h5>
                         <span class=" bg-primary_color badge-rating ">{{review.starRating}}.0</span>
                     </div>
 
                 </div>
-                <div class="col-7">
+                <div class="box received bg-light col-7 p-2">
                     {{review.body}}
-
+                    <p class="text-muted mt-2 m-0">{{review.createdAt|date:'MMM d, y, h:mm:ss a'}}</p>
                 </div>
 
             </div>
-            <hr>
+
+
         </div>
     </div>
-    <div *ngIf="!propReviews">
+    <div *ngIf="propReviews.length<=0">
         <div class="d-flex py-5 my-5 justify-content-lg-center align-items-center flex-column">
             <svg data-test-id="default-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="70px"
                 fill="#888888" height="70px" class="bui-empty-state__icon">

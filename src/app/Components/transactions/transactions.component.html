@@ -1,0 +1,195 @@
+<mat-tab-group>
+    <mat-tab label="Wallet">
+        <div class="container d-flex justify-content-between">
+            <div class="col-8 py-4 my-5 rounded-3   py-5" style="background-color: #e6e6e6">
+                <div class="d-flex align-items-center mb-3">
+                    <img src="assets/wallet_logo.png" class="mx-auto " style="width: 150px;">
+                </div>
+
+                <mat-card class="mb-3 col-10 mx-auto" style="background-color: #233B5B;">
+                    <div class="d-flex justify-content-around">
+                        <div class="text-center text-white">
+                            <h2>Total balance</h2>
+                            <h2 class="text-primary">{{dues}}$</h2>
+                        </div>
+                        <div class="text-center text-white">
+                            <h2>Withdrawable amount</h2>
+                            <h2 class="text-success">{{withdrawAmount}}$</h2>
+                        </div>
+
+                    </div>
+
+                    <mat-accordion *ngIf='withdrawAmount!=0'>
+                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Withdraw details
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 mb-2">
+
+
+
+
+
+                                <ng-container matColumnDef="transactionDate">
+                                    <th mat-header-cell *matHeaderCellDef> Transaction date </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.transactionDate | date:'MMM d, y'
+                                        }}
+                                    </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="withdrawAt">
+                                    <th mat-header-cell *matHeaderCellDef> Added at </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.withdrawAt | date:'MMM d, y' }}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="price">
+                                    <th mat-header-cell *matHeaderCellDef> Amount </th>
+                                    <td mat-cell *matCellDef="let element" class="text-success">+ {{element.price}}$
+                                    </td>
+                                </ng-container>
+
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <button (click)="openPaypalInput()" class=" w-100 btn btn-light " mat-stroked-button>
+                                Request your dues (<span class="text-success">{{withdrawAmount}}$</span>) <img
+                                    width="20px" height="20px" src="assets/ic_money.png"></button>
+
+                            <div class=" my-3 p-3  " *ngIf="paypalInput ">
+                                <mat-form-field class="example-full-width w-100" appearance="outline">
+                                    <mat-label>Paypal account</mat-label>
+                                    <input type="number" matInput [(ngModel)]="paypalAcc">
+                                </mat-form-field>
+                                <button mat-stroked-button (click)="openSnackBar()" color="primary">Send
+                                    request</button>
+
+                            </div>
+
+
+
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </mat-card>
+
+
+
+            </div>
+            <div class="col-4  my-5">
+                <div style="background-color: #E4F4FF;" class="p-3 rounded-3 ">
+
+                    <h3><svg viewBox="0 0 24 24" width="20px" height="20px">
+                            <path
+                                d="M12.75 2.251v-1.5a.75.75 0 0 0-1.5 0v1.5a.75.75 0 0 0 1.5 0zm6.144 3.167l1.061-1.06a.75.75 0 0 0-1.06-1.061l-1.061 1.06a.75.75 0 0 0 1.06 1.061zM21 12.001h1.5a.75.75 0 0 0 0-1.5H21a.75.75 0 0 0 0 1.5zm-3.166 6.144l1.06 1.061a.75.75 0 1 0 1.061-1.06l-1.06-1.061a.75.75 0 1 0-1.061 1.06zM6.166 4.358l-1.06-1.061a.75.75 0 0 0-1.061 1.06l1.06 1.061a.75.75 0 0 0 1.061-1.06zM3 10.5H1.5a.75.75 0 0 0 0 1.5H3a.75.75 0 0 0 0-1.5zm2.106 6.584l-1.061 1.06a.75.75 0 1 0 1.06 1.061l1.061-1.06a.75.75 0 1 0-1.06-1.061zm3.144-.636v2.3a3.75 3.75 0 1 0 7.5 0v-2.3a.75.75 0 0 0-1.5 0v2.3a2.25 2.25 0 0 1-4.5 0v-2.3a.75.75 0 0 0-1.5 0zm9-5.198a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0zm1.5 0a6.75 6.75 0 1 0-13.5 0 6.75 6.75 0 0 0 13.5 0zm-7.5 10.5v1.5a.75.75 0 0 0 1.5 0v-1.5a.75.75 0 0 0-1.5 0z">
+                            </path>
+                        </svg> When can I withdraw my dues?</h3>
+                    <p>You can withdraw your dues about a booking after guest checked out from your property</p>
+                </div>
+            </div>
+        </div>
+
+    </mat-tab>
+    <mat-tab label="Withdrawls history">
+        <div class="container">
+            <div class="col-8 py-4 my-5 rounded-3 d-flex justify-content-center   py-5"
+                style="background-color: #e6e6e6">
+
+
+                <div class="w-75">
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <img src="https://img.icons8.com/office/80/000000/withdrawal.png" />
+                    </div>
+                    <mat-card class="mb-3  mx-auto" style="background-color: #233B5B;">
+
+                        <div class="text-center text-white d-flex justify-content-between">
+                            <h2>Total withdrawls</h2>
+                            <h2 class="text-success">{{allWithdrawlsAmount}}$</h2>
+                        </div>
+
+
+
+                        <table mat-table [dataSource]="withdrals" class="mat-elevation-z8 w-100 ">
+
+                            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="transactionDate">
+                                <th mat-header-cell *matHeaderCellDef> Transaction date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.transactionDate | date:'medium'}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="Amount">
+                                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Amount}}$ </td>
+                            </ng-container>
+
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                        </table>
+
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Transactions history">
+        <div class="container">
+            <div class="col-8 py-4 my-5 rounded-3 d-flex justify-content-center   py-5"
+                style="background-color: #e6e6e6">
+
+
+                <div class="w-75">
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <img src="https://img.icons8.com/color/96/000000/withdrawal-limit.png" />
+                    </div>
+                    <mat-card class="mb-3  mx-auto" style="background-color: #233B5B;">
+
+                        <div class="text-center text-white d-flex justify-content-between">
+                            <h2>Total transactions</h2>
+                            <h2 class="text-success">{{allTransactionsAmount}}$</h2>
+                        </div>
+
+
+
+                        <table mat-table [dataSource]="allTransactions" class="mat-elevation-z8 w-100 ">
+
+                            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="transactionDate">
+                                <th mat-header-cell *matHeaderCellDef> Transaction date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.transactionDate | date:'medium'}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="withdrawAt">
+                                <th mat-header-cell *matHeaderCellDef> Withdrawable date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.withdrawAt | date:'medium'}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="Amount">
+                                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Amount}}$ </td>
+                            </ng-container>
+
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                        </table>
+
+                    </mat-card>
+                </div>
+            </div>
+        </div>s
+    </mat-tab>
+</mat-tab-group>

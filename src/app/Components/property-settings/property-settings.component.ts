@@ -1,5 +1,6 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+
 import {
   FormBuilder,
   FormControl,
@@ -8,26 +9,48 @@ import {
   FormArray,
 } from '@angular/forms';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { HotelService } from 'src/app/Services/hotel.service';
 import { UploadService } from 'src/app/Services/upload.service';
+import { HotelService } from 'src/app/Services/hotel.service';
 
 @Component({
-  selector: 'app-hotel-form',
-  templateUrl: './hotel-form.component.html',
-  styleUrls: ['./hotel-form.component.scss'],
-  viewProviders: [MatExpansionPanel],
+  selector: 'app-property-settings',
+  templateUrl: './property-settings.component.html',
+  styleUrls: ['./property-settings.component.scss'],
 })
-export class HotelFormComponent implements OnInit {
+export class PropertySettingsComponent implements OnInit {
   result: any;
+
+  @Input() requiredFileType!: string;
+  hotelImages: any[] = [];
+  fileName = '';
+  uploadProgress!: number;
+  uploadSub!: Subscription;
+  selectedFiles?: FileList;
+  progressInfos: any[] = [];
+  message: string[] = [];
+  uploadAvailable: boolean = true;
+  previews: string[] = [];
+  imageInfos: any[] = [];
+  isLoading = false;
+  constructor(
+    private _formBuilder: FormBuilder,
+    private upload: UploadService,
+    private hotelService: HotelService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+  property!: any;
   Hotel = this._formBuilder.group({
-    hotelName: ['', Validators.required],
-    starRating: ['', Validators.required],
-    phone: ['', Validators.required],
-    country: ['', Validators.required],
-    city: ['', Validators.required],
-    streetAddress: ['', Validators.required],
-    zipCode: ['', Validators.required],
+    hotelName: [''],
+    starRating: [''],
+    phone: [''],
+    country: [''],
+    description: [''],
+    city: [''],
+    streetAddress: [''],
+    zipCode: [''],
     cancellation: [''],
     checkIn: [''],
     checkOut: [''],
@@ -35,11 +58,11 @@ export class HotelFormComponent implements OnInit {
     pets: [''],
     paymentOption: [''],
     facilities: this._formBuilder.group({
-      parking: ['', Validators.required],
-      breakfast: ['', Validators.required],
-      lunch: ['', Validators.required],
-      dinner: ['', Validators.required],
-      popularFacilities: ['', Validators.required],
+      parking: [''],
+      breakfast: [''],
+      lunch: [''],
+      dinner: [''],
+      popularFacilities: [''],
     }),
     amenities: this._formBuilder.group({
       room: [''],
@@ -53,31 +76,52 @@ export class HotelFormComponent implements OnInit {
     }),
     rooms: this._formBuilder.array([this.addRooms()]),
   });
+  propId: any;
+  prop: any;
+  ngOnInit() {
+    this.isLoading = true;
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.propId = params.get('id');
+    });
+    this.hotelService.getHotelById(this.propId).subscribe((result) => {
+      this.property = result.data;
+      this.Hotel.patchValue(this.property);
 
-  @Input() requiredFileType!: string;
-  hotelImages: any[] = [];
-  fileName = '';
-  uploadProgress!: number;
-  uploadSub!: Subscription;
-  selectedFiles?: FileList;
-  progressInfos: any[] = [];
-  message: string[] = [];
-  uploadAvailable: boolean = true;
-  previews: string[] = [];
-  imageInfos?: Observable<any>;
-  constructor(
-    private _formBuilder: FormBuilder,
-    private upload: UploadService,
-    private hotelService: HotelService
-  ) {}
+      for (let i = 1; i < this.property.rooms.length; i++) {
+        this.rooms.push(this.addRoomsFromApi(this.property.rooms[i]));
+      }
 
-  ngOnInit() {}
-  click() {
-    console.log(this.Hotel.value);
+      this.imageInfos = this.property.images;
+      this.isLoading = false;
+    });
   }
-
+  deleteImage(index: number) {
+    for (let i = 0; i < this.imageInfos.length; i++) {
+      if (index == i) {
+        this.imageInfos.splice(i, 1);
+      }
+    }
+  }
   get rooms() {
     return this.Hotel.controls['rooms'] as FormArray;
+  }
+
+  addRoomsFromApi(room: any) {
+    return this._formBuilder.group({
+      roomName: [room.roomName],
+      type: [room.type],
+      customName: [room.customName],
+      numOfRoomOfThisType: [room.numOfRoomOfThisType],
+      roomSize: [room.roomSize],
+      price: [room.price],
+      bedType: [room.bedType],
+      bedsNumber: [room.bedsNumber],
+      guestsNumber: [room.guestsNumber],
+      facilities: [room.facilities],
+      available: [true],
+      smoking: [room.smoking],
+      bookings: [room.bookings],
+    });
   }
   addRooms() {
     return this._formBuilder.group({
@@ -93,6 +137,7 @@ export class HotelFormComponent implements OnInit {
       facilities: [''],
       available: [true],
       smoking: [''],
+      bookings: [''],
     });
   }
   onSave() {
@@ -124,7 +169,7 @@ export class HotelFormComponent implements OnInit {
           const msg = 'Uploaded the file successfully: ' + file.name;
           this.message.push(msg);
           this.hotelImages.push(event.data[0]);
-          this.Hotel.value.images = this.hotelImages;
+          this.imageInfos?.push(event.data[0]);
           console.log(this.Hotel.value);
         },
         (err: any) => {
@@ -163,9 +208,13 @@ export class HotelFormComponent implements OnInit {
     }
   }
   addHotel() {
-    this.hotelService.creatHotel(this.Hotel.value).subscribe(
+    this.isLoading = true;
+    this.Hotel.value.images = this.imageInfos;
+    console.log(this.Hotel.value);
+    this.hotelService.updateHotel(this.propId, this.Hotel.value).subscribe(
       (result) => {
-        console.log(result);
+        this.isLoading = false;
+        if (result.success == true) this.router.navigate(['/complete/']);
       },
       (err) => {
         console.log(err);

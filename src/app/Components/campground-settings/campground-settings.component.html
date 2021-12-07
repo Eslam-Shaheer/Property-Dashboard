@@ -1,24 +1,20 @@
 <div class="bg-light h-100 w-100">
-    <form [formGroup]="Hotel">
+    <form [formGroup]="Campground">
         <mat-horizontal-stepper class="bg-light">
             <mat-step label="Basic Info">
+
                 <div class="bg-white  w-50 rounded-2 mb-2  p-5">
                     <mat-form-field type="text" class="w-100" appearance="fill">
-                        <mat-label>Hotel Name</mat-label>
-                        <input matInput type="text" placeholder="Ex. Grand" formControlName="hotelName">
-                    </mat-form-field>
-
-                    <mat-form-field class="w-100" appearance="fill">
-                        <mat-label>Star Rating</mat-label>
-                        <input matInput type="number" max="10" min="1" placeholder="Ex. 5" formControlName="starRating">
+                        <mat-label>Campground Name</mat-label>
+                        <input matInput type="text" placeholder="Ex. Grand" formControlName="campgroundName">
                     </mat-form-field>
 
                     <mat-form-field class="w-100" appearance="fill">
                         <mat-label>Phone Number</mat-label>
                         <input type="tel" matInput placeholder="Ex. 010***" formControlName="phone">
                     </mat-form-field>
-
                 </div>
+
                 <div class="bg-white  w-50 rounded-2 mb-2  p-5">
                     <p class="fs-5">Where's your property located?</p>
                     <mat-form-field class="w-100" appearance="fill">
@@ -38,9 +34,11 @@
                         <input matInput type="number" placeholder="Ex. 65311" formControlName="zipCode">
                     </mat-form-field>
                 </div>
+
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
             </mat-step>
+
             <mat-step label="Layout & Pricing">
                 <div class="bg-white  w-50 rounded-2 mb-2  p-5">
                     <ng-container formArrayName="rooms" *ngFor="let roomForm of rooms.controls; let i=index">
@@ -61,17 +59,17 @@
                                     <mat-option value="Triple">Triple</mat-option>
                                     <mat-option value="Quad">Quad</mat-option>
                                     <mat-option value="Family">Family</mat-option>
-                                    <mat-option value="Suite">Suite</mat-option>
-                                    <mat-option value="Studio">Studio</mat-option>
-                                    <mat-option value="Dorm Room">Dorm Room</mat-option>
-                                    <mat-option value="Bed in Dorm Room">Bed in Dorm Room</mat-option>
+                                    <mat-option value="Bungalow">Bungalow</mat-option>
+                                    <mat-option value="Chalet">Chalet</mat-option>
+                                    <mat-option value="Trailer">Trailer</mat-option>
+                                    <mat-option value="Tent">Tent</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="w-100" appearance="fill">
                                 <mat-label>Smooking</mat-label>
                                 <mat-select formControlName="smoking">
-                                    <mat-option value="true">Yes</mat-option>
-                                    <mat-option value="false">No</mat-option>
+                                    <mat-option [value]="true">Yes</mat-option>
+                                    <mat-option [value]="false">No</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="w-100" appearance="fill">
@@ -137,16 +135,15 @@
 
 
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext (click)="click()">Next</button>
+                <button mat-button matStepperNext>Next</button>
             </mat-step>
-
             <mat-step label="Facilities & Services" formGroupName="facilities">
                 <div class="bg-white  w-50 rounded-2 mb-2  p-5">
                     <mat-form-field class="w-100" appearance="fill">
                         <mat-label>Parking</mat-label>
                         <mat-select formControlName="parking">
-                            <mat-option value="true">Yes</mat-option>
-                            <mat-option value="false">No</mat-option>
+                            <mat-option [value]="true">Yes</mat-option>
+                            <mat-option [value]="false">No</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -155,22 +152,22 @@
                     <mat-form-field class="w-100" appearance="fill">
                         <mat-label>Breakfast</mat-label>
                         <mat-select formControlName="breakfast">
-                            <mat-option value="true">Yes</mat-option>
-                            <mat-option value="false">No</mat-option>
+                            <mat-option [value]="true">Yes</mat-option>
+                            <mat-option [value]="false">No</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="w-100" appearance="fill">
                         <mat-label>Lunch</mat-label>
                         <mat-select formControlName="lunch">
-                            <mat-option value="true">Yes</mat-option>
-                            <mat-option value="false">No</mat-option>
+                            <mat-option [value]="true">Yes</mat-option>
+                            <mat-option [value]="false">No</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="w-100" appearance="fill">
                         <mat-label>Dinner</mat-label>
                         <mat-select formControlName="dinner">
-                            <mat-option value="true">Yes</mat-option>
-                            <mat-option value="false">No</mat-option>
+                            <mat-option [value]="true">Yes</mat-option>
+                            <mat-option [value]="false">No</mat-option>
                         </mat-select>
                     </mat-form-field>
 
@@ -195,12 +192,13 @@
                             <mat-option value="Hot tub/Jacuzzi">Hot tub/Jacuzzi</mat-option>
                             <mat-option value="Air conditioning">Air conditioning</mat-option>
                             <mat-option value="Terrace">Terrace</mat-option>
+                            <mat-option value="Garden">Garden</mat-option>
                         </mat-select>
                     </mat-form-field>
 
                 </div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext (click)="click()">Next</button>
+                <button mat-button matStepperNext>Next</button>
             </mat-step>
 
             <mat-step label="Amenities" formGroupName="amenities">
@@ -341,7 +339,7 @@
                     </mat-form-field>
                 </div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext (click)="click()">Next</button>
+                <button mat-button matStepperNext>Next</button>
             </mat-step>
 
             <mat-step label="Photos">
@@ -369,14 +367,13 @@
                         </div>
 
                         <div class="col-4">
-                            <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="uploadFiles()">
-                                Upload
+                            <button class="btn btn-primary btn-sm" [disabled]="!selectedFiles" (click)="uploadFiles()">
+                                Add photos
                             </button>
                         </div>
 
-
-                        <div>
-                            <img *ngFor='let preview of previews' [src]="preview" class="preview">
+                        <div class="d-flex flex-wrap justify-content-between w-100">
+                            <img *ngFor='let preview of previews' [src]="preview" class="preview mb-2 w-100">
                         </div>
 
                         <div *ngIf="message.length" class="alert alert-secondary my-3" role="alert">
@@ -385,12 +382,18 @@
                             </ul>
                         </div>
 
-                        <div class="card mt-3">
+                        <div class="card mt-3 w-100">
                             <div class="card-header">List of Images</div>
-                            <ul class="list-group list-group-flush" *ngFor="let image of imageInfos | async">
-                                <li class="list-group-item">
-                                    <p><a href="{{ image.url }}">{{ image.name }}</a></p>
-                                    <img src="{{ image.url }}" alt="{{ image.name }}" />
+                            <ul class="list-group list-group-flush" *ngFor="let image of imageInfos;let i = index ">
+                                <li class="list-group-item ">
+
+
+                                    <mat-icon color="warn" class="deleteImage" aria-hidden="false"
+                                        (click)="deleteImage(i)" aria-label="Example home icon">delete
+                                    </mat-icon>
+
+                                    <img class="preview" src="{{ image }}" />
+
                                 </li>
                             </ul>
                         </div>
@@ -415,18 +418,18 @@
             </mat-step>
             <mat-step label="Policies">
                 <div class="bg-white  w-50 rounded-2 mb-2  p-5">
-                    <h1>Cancellations</h1>
+                    <h1>Cancellation</h1>
                     <p>How many days in advance can guests cancel free of charge?</p>
                     <mat-form-field appearance="fill" class="w-100">
-                        <mat-label>Cancellations</mat-label>
+                        <mat-label>Cancellation</mat-label>
                         <mat-select formControlName="cancellation">
-                            <mat-option value=1>1 Day</mat-option>
-                            <mat-option value=2>2 Days</mat-option>
-                            <mat-option value=3>3 Days</mat-option>
-                            <mat-option value=4>4 Days</mat-option>
-                            <mat-option value=5>5 Days</mat-option>
-                            <mat-option value=6>6 Days</mat-option>
-                            <mat-option value=7>1 Week</mat-option>
+                            <mat-option [value]=1>1 Day</mat-option>
+                            <mat-option [value]=2>2 Days</mat-option>
+                            <mat-option [value]=3>3 Days</mat-option>
+                            <mat-option [value]=4>4 Days</mat-option>
+                            <mat-option [value]=5>5 Days</mat-option>
+                            <mat-option [value]=6>6 Days</mat-option>
+                            <mat-option [value]=7>1 Week</mat-option>
                         </mat-select>
                     </mat-form-field>
 
@@ -448,19 +451,19 @@
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Children</mat-label>
                         <mat-select formControlName="children">
-                            <mat-option value=true>Yes</mat-option>
-                            <mat-option value=false>No</mat-option>
+                            <mat-option [value]=true>Yes</mat-option>
+                            <mat-option [value]=false>No</mat-option>
                         </mat-select>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Pets</mat-label>
                         <mat-select formControlName="pets">
-                            <mat-option value=true>Yes</mat-option>
-                            <mat-option value=false>No</mat-option>
+                            <mat-option [value]=true>Yes</mat-option>
+                            <mat-option [value]=false>No</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    
+
                 </div>
 
 
@@ -475,12 +478,12 @@
                         <mat-label>Paypal account</mat-label>
                         <input matInput formControlName="paymentOption">
                     </mat-form-field>
-                    <button (click)="addHotel()" mat-flat-button color="primary" class="w-100" type="submit">Complete
+                    <button (click)="addCampground()" mat-flat-button color="primary" class="w-100"
+                        type="submit">Complete
                         registration</button>
 
                 </div>
             </mat-step>
-
         </mat-horizontal-stepper>
     </form>
 </div>

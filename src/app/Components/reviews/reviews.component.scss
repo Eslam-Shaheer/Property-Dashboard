@@ -1,6 +1,6 @@
 .personal-image {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   margin-top: 5px;
 }
@@ -16,4 +16,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.received:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #f8f9fa;
+  border-top: 10px solid #f8f9fa;
+  border-bottom: 10px solid transparent;
+  left: -19px;
+  top: 10px;
+}
+.box {
+  position: relative;
+  border-radius: 6px;
+}
+.spinner {
+  height: 500px;
 }

@@ -1,0 +1,455 @@
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="bg-light h-100 w-100">
+    <ng-container *ngIf="property&&!isLoading">
+        <form [formGroup]="Apartment">
+
+            <mat-horizontal-stepper class="bg-light">
+                <mat-step label="Name & Location">
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5">
+                        <mat-form-field type="text" class="w-100" appearance="fill">
+                            <mat-label>Apartment Name</mat-label>
+                            <input matInput type="text" placeholder="Ex. Grand" formControlName="apartmentName">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Country</mat-label>
+                            <input matInput placeholder="Ex. Egypt" formControlName="country">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>City</mat-label>
+                            <input matInput placeholder="Ex. Qena" formControlName="city">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Zip Code</mat-label>
+                            <input matInput type="number" placeholder="Ex. 65311" formControlName="zipCode">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Home number</mat-label>
+                            <input matInput type="number" placeholder="Ex. 303" formControlName="homeNumber">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Apartment number</mat-label>
+                            <input matInput type="number" placeholder="Ex. 5" formControlName="apartmentNumber">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Phone Number</mat-label>
+                            <input type="tel" matInput placeholder="Ex. 010***" formControlName="phone">
+                        </mat-form-field>
+
+                    </div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </mat-step>
+                <mat-step label="Property setup">
+
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5 ">
+                        <h2>Where people can sleep!</h2>
+
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Bed rooms
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <ng-container formArrayName="bedRooms"
+                                    *ngFor="let roomForm of bedRooms.controls; let i=index">
+                                    <div class="mb-4" [formGroupName]="i">
+                                        <h4 class="my-4">Bed Room {{i+1}}</h4>
+                                        <mat-form-field appearance="outline" style="width: 85%;">
+                                            <mat-label>Twin Bed(s)</mat-label>
+                                            <input min="0" matInput type="number" placeholder="Placeholder"
+                                                formControlName="twinBed">
+
+                                            <mat-hint>Add count of twin beds</mat-hint>
+                                        </mat-form-field>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="#949494"
+                                            style="width: 60px;margin-bottom: 5px; margin-left: 5px;">
+                                            <path
+                                                d="M78.25 48h-60.5C16.1 48 15 49.1 15 50.77v30.46C15 82.9 16.1 84 17.75 84s2.75-1.1 2.75-2.77V70.15h55v11.08c0 1.66 1.1 2.77 2.75 2.77S81 82.9 81 81.23V50.77C81 49.1 79.9 48 78.25 48zm-22-27.7h-27.5v-5.53c0-1.66-1.1-2.77-2.75-2.77s-2.75 1.1-2.75 2.77v27.7h33V20.3z">
+                                            </path>
+                                            <path
+                                                d="M72.75 23.08v-8.3c0-1.67-1.1-2.78-2.75-2.78s-2.75 1.1-2.75 2.77v5.54h-27.5v22.16h33V23.08z">
+                                            </path>
+                                        </svg>
+
+                                        <mat-form-field appearance="outline" style="width: 85%;">
+                                            <mat-label>Full Bed(s)</mat-label>
+                                            <input min="0" matInput type="number" placeholder="Placeholder"
+                                                formControlName="fullBed">
+                                            <mat-hint>Add count of full beds</mat-hint>
+
+                                        </mat-form-field>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="#949494"
+                                            style="width: 60px;margin-bottom: 5px; margin-left: 5px;">
+                                            <path
+                                                d="M89.25 48H6.75C5.1 48 4 49.1 4 50.77v30.46C4 82.9 5.1 84 6.75 84s2.75-1.1 2.75-2.77V70.15h77v11.08c0 1.66 1.1 2.77 2.75 2.77S92 82.9 92 81.23V50.77C92 49.1 90.9 48 89.25 48zm-44-27.7h-27.5v-5.53c0-1.66-1.1-2.77-2.75-2.77s-2.75 1.1-2.75 2.77v27.7h33V20.3zm38.5 2.78v-8.3c0-1.67-1.1-2.78-2.75-2.78s-2.75 1.1-2.75 2.77v5.54h-27.5v22.16h33V23.08z">
+                                            </path>
+                                        </svg>
+
+                                        <mat-form-field appearance="outline" style="width: 85%;">
+                                            <mat-label>Queen Bed(s)</mat-label>
+                                            <input min="0" matInput type="number" placeholder="Placeholder"
+                                                formControlName="queenBed">
+                                            <mat-hint>Add count of queen beds</mat-hint>
+
+                                        </mat-form-field>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="#949494"
+                                            style="width: 60px;margin-bottom: 5px; margin-left: 5px;">
+                                            <path
+                                                d="M89.25 48H6.75C5.1 48 4 49.1 4 50.77v30.46C4 82.9 5.1 84 6.75 84s2.75-1.1 2.75-2.77V70.15h77v11.08c0 1.66 1.1 2.77 2.75 2.77S92 82.9 92 81.23V50.77C92 49.1 90.9 48 89.25 48zm-44-27.7h-27.5v-5.53c0-1.66-1.1-2.77-2.75-2.77s-2.75 1.1-2.75 2.77v27.7h33V20.3zm38.5 2.78v-8.3c0-1.67-1.1-2.78-2.75-2.78s-2.75 1.1-2.75 2.77v5.54h-27.5v22.16h33V23.08z">
+                                            </path>
+                                        </svg>
+
+                                        <mat-form-field appearance="outline" style="width: 85%;">
+                                            <mat-label>King Bed(s)</mat-label>
+                                            <input min="0" matInput type="number" placeholder="Placeholder"
+                                                formControlName="kingBed">
+                                            <mat-hint>Add count of king beds</mat-hint>
+
+                                        </mat-form-field>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="#949494"
+                                            style="width: 60px;margin-bottom: 5px; margin-left: 5px;">
+                                            <path
+                                                d="M89.25 48H6.75C5.1 48 4 49.1 4 50.77v30.46C4 82.9 5.1 84 6.75 84s2.75-1.1 2.75-2.77V70.15h77v11.08c0 1.66 1.1 2.77 2.75 2.77S92 82.9 92 81.23V50.77C92 49.1 90.9 48 89.25 48zm-44-27.7h-27.5v-5.53c0-1.66-1.1-2.77-2.75-2.77s-2.75 1.1-2.75 2.77v27.7h33V20.3zm38.5 2.78v-8.3c0-1.67-1.1-2.78-2.75-2.78s-2.75 1.1-2.75 2.77v5.54h-27.5v22.16h33V23.08z">
+                                            </path>
+                                        </svg>
+
+                                        <mat-form-field appearance="outline" style="width: 85%;">
+                                            <mat-label>Bunk Bed(s)</mat-label>
+                                            <input min="0" matInput type="number" placeholder="Placeholder"
+                                                formControlName="bunkBed">
+                                            <mat-hint>Add count of Bunk beds</mat-hint>
+
+                                        </mat-form-field>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="#949494"
+                                            style="width: 60px;margin-bottom: 5px; margin-left: 5px;">
+                                            <path
+                                                d="M81 54.9v30.34C81 86.9 79.9 88 78.25 88s-2.75-1.1-2.75-2.76v-8.27h-55v8.27c0 1.66-1.1 2.76-2.75 2.76S15 86.9 15 85.24V10.76C15 9.1 16.1 8 17.75 8s2.75 1.1 2.75 2.76v19.3h55v-5.5c0-1.66 1.1-2.77 2.75-2.77S81 22.9 81 24.54V54.9zm-60.5-4.14v9.65h55V46.63h-55v4.14z">
+                                            </path>
+                                        </svg>
+
+                                        <mat-form-field appearance="outline" style="width: 85%;">
+                                            <mat-label>Sofa Bed(s)</mat-label>
+                                            <input min="0" matInput type="number" placeholder="Placeholder"
+                                                formControlName="sofaBed">
+                                            <mat-hint>Add count of sofa beds</mat-hint>
+
+                                        </mat-form-field>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="#949494"
+                                            style="width: 60px;margin-bottom: 5px; margin-left: 5px;">
+                                            <path
+                                                d="M78.25 45.75h-5.5c-1.65 0-2.75 1.1-2.75 2.75v8.25H26V48.5c0-1.65-1.1-2.75-2.75-2.75h-5.5c-1.65 0-2.75 1.1-2.75 2.75v19.25c0 1.65 1.1 2.75 2.75 2.75h2.75v2.75c0 1.65 1.1 2.75 2.75 2.75S26 74.9 26 73.25V70.5h44v2.75C70 74.9 71.1 76 72.75 76s2.75-1.1 2.75-2.75V70.5h2.75c1.65 0 2.75-1.1 2.75-2.75V48.5c0-1.65-1.1-2.75-2.75-2.75z">
+                                            </path>
+                                            <path
+                                                d="M45.25 51.25V21h-22c-1.65 0-2.75 1.1-2.75 2.75v16.5h8.25c1.65 0 2.75 1.1 2.75 2.75v8.25h13.75zm30.25-27.5c0-1.65-1.1-2.75-2.75-2.75h-22v30.25H64.5V43c0-1.65 1.1-2.75 2.75-2.75h8.25v-16.5z">
+                                            </path>
+                                        </svg>
+
+                                        <mat-form-field appearance="outline" style="width: 85%;">
+                                            <mat-label>Futon Bed(s)</mat-label>
+                                            <input min="0" matInput type="number" placeholder="Placeholder"
+                                                formControlName="futonBed">
+                                            <mat-hint>Add count of futon beds</mat-hint>
+
+                                        </mat-form-field>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="#949494"
+                                            style="width: 60px;margin-bottom: 5px; margin-left: 5px;">
+                                            <path
+                                                d="M89.25 48H6.75C5.1 48 4 49.1 4 50.77v30.46C4 82.9 5.1 84 6.75 84s2.75-1.1 2.75-2.77V70.15h77v11.08c0 1.66 1.1 2.77 2.75 2.77S92 82.9 92 81.23V50.77C92 49.1 90.9 48 89.25 48zm-44-27.7h-27.5v-5.53c0-1.66-1.1-2.77-2.75-2.77s-2.75 1.1-2.75 2.77v27.7h33V20.3zm38.5 2.78v-8.3c0-1.67-1.1-2.78-2.75-2.78s-2.75 1.1-2.75 2.77v5.54h-27.5v22.16h33V23.08z">
+                                            </path>
+                                        </svg>
+
+                                    </div>
+                                </ng-container>
+
+                                <div>
+                                    <button (click)="addBedRoom()" mat-stroked-button class="w-100 my-3"
+                                        color="primary">Add
+                                        New Bed Room</button>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                        <mat-accordion>
+                            <mat-expansion-panel class="mt-5" (opened)="panelOpenState2 = true"
+                                (closed)="panelOpenState2 = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Living rooms
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <ng-container formArrayName="livingRooms"
+                                    *ngFor="let roomForm of livingRooms.controls; let i=index">
+                                    <div class="mb-4" [formGroupName]="i">
+                                        <h4 class="my-4">Bed Room {{i+1}}</h4>
+                                        <mat-form-field appearance="outline" style="width: 85%;">
+                                            <mat-label>Sofa Bed(s)</mat-label>
+                                            <input min="0" matInput type="number" placeholder="Placeholder"
+                                                formControlName="sofaBed">
+                                            <mat-hint>Add count of sofa beds</mat-hint>
+                                        </mat-form-field>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="#949494"
+                                            style="width: 60px;margin-bottom: 5px; margin-left: 5px;">
+                                            <path
+                                                d="M78.25 45.75h-5.5c-1.65 0-2.75 1.1-2.75 2.75v8.25H26V48.5c0-1.65-1.1-2.75-2.75-2.75h-5.5c-1.65 0-2.75 1.1-2.75 2.75v19.25c0 1.65 1.1 2.75 2.75 2.75h2.75v2.75c0 1.65 1.1 2.75 2.75 2.75S26 74.9 26 73.25V70.5h44v2.75C70 74.9 71.1 76 72.75 76s2.75-1.1 2.75-2.75V70.5h2.75c1.65 0 2.75-1.1 2.75-2.75V48.5c0-1.65-1.1-2.75-2.75-2.75z">
+                                            </path>
+                                            <path
+                                                d="M45.25 51.25V21h-22c-1.65 0-2.75 1.1-2.75 2.75v16.5h8.25c1.65 0 2.75 1.1 2.75 2.75v8.25h13.75zm30.25-27.5c0-1.65-1.1-2.75-2.75-2.75h-22v30.25H64.5V43c0-1.65 1.1-2.75 2.75-2.75h8.25v-16.5z">
+                                            </path>
+                                        </svg>
+
+
+
+                                    </div>
+                                </ng-container>
+
+                                <div>
+                                    <button (click)="addLivingRoom()" mat-stroked-button class="w-100 my-3"
+                                        color="primary">Add
+                                        New Living Room</button>
+                                </div>
+
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5 ">
+                        <h3>How many guests can stay?</h3>
+                        <mat-form-field appearance="fill" class="w-100">
+                            <input formControlName="guestsNum" matInput min="0" type="number" placeholder="Ex. 5">
+
+                        </mat-form-field>
+
+                        <h3>How many bathrooms are there?</h3>
+                        <mat-form-field appearance="fill" class="w-100">
+                            <input formControlName="bathRooms" matInput min="0" type="number" placeholder="Ex. 1">
+
+                        </mat-form-field>
+                    </div>
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5 ">
+                        <h3>How big is this apartment?</h3>
+                        <mat-form-field appearance="fill" class="w-100">
+                            <input min="0" matInput type="number" formControlName="size">
+                            <mat-hint>By meter</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </mat-step>
+                <mat-step label="Facilities " formGroupName="facilities">
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5 ">
+                        <h2>What can guests use at your place?</h2>
+                        <h2 class="mt-3">General</h2>
+                        <mat-selection-list formControlName="general">
+                            <mat-list-option color="primary" class="fs-6" value="Air conditioning">Air conditioning
+                            </mat-list-option>
+                            <mat-list-option color="primary" value="Heating">Heating
+                            </mat-list-option>
+                            <mat-list-option color="primary" value="Free WiFi">Free WiFi</mat-list-option>
+                            <mat-list-option color="primary" value="Electric vehicle charging station">Electric vehicle
+                                charging station
+                            </mat-list-option>
+                        </mat-selection-list>
+                        <hr>
+                        <h2 class="mt-3">Cooking and cleaning</h2>
+                        <mat-selection-list formControlName="cookingAndCleaening">
+                            <mat-list-option color="primary" class="fs-6" value="Kitchen">Kitchen</mat-list-option>
+                            <mat-list-option color="primary" value="Kitchenette">Kitchenette</mat-list-option>
+                            <mat-list-option color="primary" value="Washing machine">Washing machine</mat-list-option>
+
+                        </mat-selection-list>
+                        <hr>
+                        <h2 class="mt-3">Entertainment</h2>
+                        <mat-selection-list formControlName="entertainment">
+                            <mat-list-option color="primary" class="fs-6" value="Flat-screen TV">Flat-screen TV
+                            </mat-list-option>
+                            <mat-list-option color="primary" value="Swimming pool">Swimming pool</mat-list-option>
+                            <mat-list-option color="primary" value="Hot tub">Hot tub</mat-list-option>
+                            <mat-list-option color="primary" value="Minibar">Minibar</mat-list-option>
+                            <mat-list-option color="primary" value="Sauna">Sauna</mat-list-option>
+                        </mat-selection-list>
+                        <hr>
+                        <h2 class="mt-3">Outside and view</h2>
+                        <mat-selection-list formControlName="view">
+                            <mat-list-option color="primary" class="fs-6" value="Balcony">Balcony</mat-list-option>
+                            <mat-list-option color="primary" value="Garden view">Garden view</mat-list-option>
+                            <mat-list-option color="primary" value="Terrace">Terrace</mat-list-option>
+                            <mat-list-option color="primary" value="View">View</mat-list-option>
+                        </mat-selection-list>
+                    </div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </mat-step>
+                <mat-step label="Photos">
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5 imagesPage">
+
+                        <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+
+
+                            <span>{{ progressInfo.fileName }}</span>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                                    attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
+                                    [ngStyle]="{ width: progressInfo.value + '%' }">
+                                    {{ progressInfo.value }}%
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <label class="btn btn-default p-0">
+                                    <input type="file" name="multiple_images" accept="image/*" multiple
+                                        (change)="selectFiles($event)" />
+                                </label>
+                            </div>
+
+                            <div class="col-4">
+                                <button class="btn btn-success btn-sm" [disabled]="!selectedFiles"
+                                    (click)="uploadFiles()">
+                                    Add photos
+                                </button>
+                            </div>
+
+
+                            <div class="d-flex flex-wrap justify-content-center w-75 mx-auto">
+                                <img *ngFor='let preview of previews' [src]="preview" class="preview w-100 mb-2">
+                            </div>
+
+                            <div *ngIf="message.length" class="alert alert-secondary my-3" role="alert">
+                                <ul *ngFor="let msg of message; let i = index">
+                                    <li>{{ msg }}</li>
+                                </ul>
+                            </div>
+
+                            <div class="card mt-3 w-100">
+                                <div class="card-header">List of Images</div>
+                                <ul class="list-group list-group-flush" *ngFor="let image of imageInfos;let i = index ">
+                                    <li class="list-group-item ">
+                                        <mat-icon color="warn" class="deleteImage" aria-hidden="false"
+                                            (click)="deleteImage(i)" aria-label="Example home icon">delete
+                                        </mat-icon>
+                                        <img class="preview" src="{{ image }}" />
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="progress">
+
+                            <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress"
+                                *ngIf="uploadProgress">
+
+                            </mat-progress-bar>
+
+                            <mat-icon class="cancel-upload" (click)="cancelUpload()" *ngIf="uploadProgress">
+                                delete_forever
+                            </mat-icon>
+
+                        </div>
+
+
+                    </div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </mat-step>
+                <mat-step label="House roles">
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5 ">
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Smoking allowed</mat-label>
+                            <mat-select formControlName="smoking">
+                                <mat-option [value]=true>Yes</mat-option>
+                                <mat-option [value]=false>No</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Pets allowed</mat-label>
+                            <mat-select formControlName="pets">
+                                <mat-option [value]=true>Yes</mat-option>
+                                <mat-option [value]=false>No</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Children allowed</mat-label>
+                            <mat-select formControlName="children">
+                                <mat-option [value]=true>Yes</mat-option>
+                                <mat-option [value]=false>No</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Parties/events allowed</mat-label>
+                            <mat-select formControlName="events">
+                                <mat-option [value]=true>Yes</mat-option>
+                                <mat-option [value]=false>No</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5">
+                        <h1>Check-in</h1>
+
+                        <input placeholder="12hr format (default settings)" aria-label="12hr format"
+                            [ngxTimepicker]="default1" readonly class="time-picker" formControlName="checkIn">
+                        <ngx-material-timepicker #default1></ngx-material-timepicker>
+
+
+                        <h1 class="mt-5">Check-out</h1>
+                        <input placeholder="12hr format (default settings)" aria-label="12hr format"
+                            [ngxTimepicker]="default2" readonly class="time-picker" formControlName="checkOut">
+                        <ngx-material-timepicker #default2></ngx-material-timepicker>
+                    </div>
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5">
+                        <h1>Cancellations</h1>
+                        <p>How many days in advance can guests cancel free of charge?</p>
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Cancellations</mat-label>
+                            <mat-select formControlName="cancellation">
+                                <mat-option [value]=1>1 Day</mat-option>
+                                <mat-option [value]=2>2 Days</mat-option>
+                                <mat-option [value]=3>3 Days</mat-option>
+                                <mat-option [value]=4>4 Days</mat-option>
+                                <mat-option [value]=5>5 Days</mat-option>
+                                <mat-option [value]=6>6 Days</mat-option>
+                                <mat-option [value]=7>1 Week</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </mat-step>
+                <mat-step label="Complete">
+                    <div class="bg-white  w-50 rounded-2 mb-2  p-5 ">
+
+                        <mat-form-field appearance="fill" class="w-100" floatLabel="always">
+                            <mat-label>Price</mat-label>
+                            <input matInput type="number" formControlName="price" class="example-right-align w-100"
+                                placeholder="Per day">
+                            <span matPrefix>$&nbsp;</span>
+                            <span matSuffix>.00</span>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Paypal account</mat-label>
+                            <input matInput formControlName="paymentOption">
+                        </mat-form-field>
+
+                        <button (click)="addApartment()" mat-flat-button color="primary" class="w-100"
+                            type="submit">Complete
+                            registration</button>
+                    </div>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </form>
+    </ng-container>
+</div>

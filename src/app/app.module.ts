@@ -11,11 +11,14 @@ import { ReservationsComponent } from './Components/reservations/reservations.co
 import { ReviewsComponent } from './Components/reviews/reviews.component';
 import { HomeComponent } from './Components/home/home.component';
 import { InboxComponent } from './Components/inbox/inbox.component';
-import { HotelFormComponent } from './Components/hotel-form/hotel-form.component';
-import { CampgroundFormComponent } from './Components/campground-form/campground-form.component';
-import { ApartmentFormComponent } from './Components/apartment-form/apartment-form.component';
-import { AddPropertyHomePageComponent } from './Components/add-property-home-page/add-property-home-page.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PropertySettingsComponent } from './Components/property-settings/property-settings.component';
+import { CompleteComponent } from './Components/complete/complete.component';
+import { ApartmentSettingComponent } from './Components/apartment-setting/apartment-setting.component';
+import { CampgroundSettingsComponent } from './Components/campground-settings/campground-settings.component';
+import { FooterComponent } from './Components/footer/footer.component';
+import { TransactionsComponent } from './Components/transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +28,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReviewsComponent,
     HomeComponent,
     InboxComponent,
-    HotelFormComponent,
-    CampgroundFormComponent,
-    ApartmentFormComponent,
-    AddPropertyHomePageComponent,
+    PropertySettingsComponent,
+    CompleteComponent,
+    ApartmentSettingComponent,
+    CampgroundSettingsComponent,
+    FooterComponent,
+    TransactionsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,73 +1,75 @@
-<div>
-    <div class="container ">
-        <div class="col-8 py-4 bg-white">
-            <h1>Latest bookings</h1>
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div class="container py-5" *ngIf="!isLoading">
+    <h1>{{propName}}</h1>
+    <div class="col-8 py-4 bg-white">
+        <h1>Latest bookings</h1>
 
 
-            <table class="table mb-5">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Guest</th>
-                        <th scope="col">Check in</th>
-                        <th scope="col">Check out</th>
-                    </tr>
-                </thead>
-                <tbody *ngFor="let booking of latestBookings; let i = index">
-                    <tr>
-                        <th scope="row">{{i+1}}</th>
-                        <td>{{booking.guestId}}</td>
-                        <td>{{booking.startAt}}</td>
-                        <td>{{booking.endAt}}</td>
-                    </tr>
+        <table class="table mb-5" *ngIf="latestBookings.length>0">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Guest</th>
+                    <th scope="col">Check in</th>
+                    <th scope="col">Check out</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let booking of latestBookings; let i = index">
+                <tr>
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{booking.guestId.username }}</td>
+                    <td>{{booking.startAt | date:'mediumDate'}}</td>
+                    <td>{{booking.endAt | date:'mediumDate'}}</td>
+                </tr>
 
-                </tbody>
-            </table>
-            <div *ngIf="latestBookings.length==0">
-                <div class="d-flex  my-5 justify-content-lg-center align-items-center flex-column">
-                    <svg data-test-id="default-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="60px"
-                        fill="#888888" height="60px" class="bui-empty-state__icon">
-                        <path
-                            d="M13.629 22.5H2.25a.75.75 0 0 1-.75-.75V2.25a.75.75 0 0 1 .75-.75h19.5a.75.75 0 0 1 .75.75v11.379a.75.75 0 0 1-.22.53L14.16 22.28a.75.75 0 0 1-.53.219zm0 1.5a2.25 2.25 0 0 0 1.59-.659l8.122-8.122A2.25 2.25 0 0 0 24 13.63V2.25A2.25 2.25 0 0 0 21.75 0H2.25A2.25 2.25 0 0 0 0 2.25v19.5A2.25 2.25 0 0 0 2.25 24h11.379zM15 23.115V15.75a.75.75 0 0 1 .75-.75h7.365a.75.75 0 0 0 0-1.5H15.75a2.25 2.25 0 0 0-2.25 2.25v7.365a.75.75 0 0 0 1.5 0z">
-                        </path>
-                    </svg>
-                    <h4 class="my-4" style="color:#888888">You haven't received any bookings</h4>
-                </div>
-
+            </tbody>
+        </table>
+        <div *ngIf="latestBookings.length==0">
+            <div class="d-flex  my-5 justify-content-lg-center align-items-center flex-column">
+                <svg data-test-id="default-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="60px"
+                    fill="#888888" height="60px" class="bui-empty-state__icon">
+                    <path
+                        d="M13.629 22.5H2.25a.75.75 0 0 1-.75-.75V2.25a.75.75 0 0 1 .75-.75h19.5a.75.75 0 0 1 .75.75v11.379a.75.75 0 0 1-.22.53L14.16 22.28a.75.75 0 0 1-.53.219zm0 1.5a2.25 2.25 0 0 0 1.59-.659l8.122-8.122A2.25 2.25 0 0 0 24 13.63V2.25A2.25 2.25 0 0 0 21.75 0H2.25A2.25 2.25 0 0 0 0 2.25v19.5A2.25 2.25 0 0 0 2.25 24h11.379zM15 23.115V15.75a.75.75 0 0 1 .75-.75h7.365a.75.75 0 0 0 0-1.5H15.75a2.25 2.25 0 0 0-2.25 2.25v7.365a.75.75 0 0 0 1.5 0z">
+                    </path>
+                </svg>
+                <h4 class="my-4" style="color:#888888">You haven't received any bookings</h4>
             </div>
-
-
-            <h1>Unanswered messages</h1>
-            <div *ngIf="unAnswerdMsgs.length==0">
-                <div class="d-flex my-5 justify-content-lg-center align-items-center flex-column">
-                    <svg data-test-id="default-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="70px"
-                        fill="#888888" height="70px" class="bui-empty-state__icon">
-                        <path
-                            d="M13.629 22.5H2.25a.75.75 0 0 1-.75-.75V2.25a.75.75 0 0 1 .75-.75h19.5a.75.75 0 0 1 .75.75v11.379a.75.75 0 0 1-.22.53L14.16 22.28a.75.75 0 0 1-.53.219zm0 1.5a2.25 2.25 0 0 0 1.59-.659l8.122-8.122A2.25 2.25 0 0 0 24 13.63V2.25A2.25 2.25 0 0 0 21.75 0H2.25A2.25 2.25 0 0 0 0 2.25v19.5A2.25 2.25 0 0 0 2.25 24h11.379zM15 23.115V15.75a.75.75 0 0 1 .75-.75h7.365a.75.75 0 0 0 0-1.5H15.75a2.25 2.25 0 0 0-2.25 2.25v7.365a.75.75 0 0 0 1.5 0z">
-                        </path>
-                    </svg>
-                    <h4 class="my-4" style="color:#888888">No unanswered messages</h4>
-                </div>
-            </div>
-            <div *ngFor="let message of unAnswerdMsgs">
-                <div *ngIf="message">
-                    <mat-card>
-                        <div class=" d-flex align-items-center">
-                            <img class="personal-image" src="assets/photo-1604223190546-a43e4c7f29d7.jpg" alt="">
-                            <div class="d-flex flex-column my-auto  mx-3">
-                                <h3 class="my-0">{{message.userId}}</h3>
-
-                            </div>
-                            <div>
-                                {{message.body}}
-                            </div>
-                        </div>
-                    </mat-card>
-                </div>
-
-            </div>
-
 
         </div>
+
+
+        <h1>Unanswered messages</h1>
+        <div *ngIf="unAnswerdMsgs.length==0">
+            <div class="d-flex my-5 justify-content-lg-center align-items-center flex-column">
+                <svg data-test-id="default-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="70px"
+                    fill="#888888" height="70px" class="bui-empty-state__icon">
+                    <path
+                        d="M13.629 22.5H2.25a.75.75 0 0 1-.75-.75V2.25a.75.75 0 0 1 .75-.75h19.5a.75.75 0 0 1 .75.75v11.379a.75.75 0 0 1-.22.53L14.16 22.28a.75.75 0 0 1-.53.219zm0 1.5a2.25 2.25 0 0 0 1.59-.659l8.122-8.122A2.25 2.25 0 0 0 24 13.63V2.25A2.25 2.25 0 0 0 21.75 0H2.25A2.25 2.25 0 0 0 0 2.25v19.5A2.25 2.25 0 0 0 2.25 24h11.379zM15 23.115V15.75a.75.75 0 0 1 .75-.75h7.365a.75.75 0 0 0 0-1.5H15.75a2.25 2.25 0 0 0-2.25 2.25v7.365a.75.75 0 0 0 1.5 0z">
+                    </path>
+                </svg>
+                <h4 class="my-4" style="color:#888888">No unanswered messages</h4>
+            </div>
+        </div>
+        <div *ngFor="let message of unAnswerdMsgs">
+            <div *ngIf="message">
+                <mat-card class="mb-2">
+                    <div class=" d-flex align-items-center">
+                        <img class="personal-image" src={{message.userId.personalImage}} alt="">
+                        <div class="d-flex flex-column my-auto  mx-3">
+                            <h3 class="my-0">{{message.userId.username}}</h3>
+
+                        </div>
+                        <div>
+                            {{message.body}}
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+
+        </div>
+
+
     </div>
 </div>

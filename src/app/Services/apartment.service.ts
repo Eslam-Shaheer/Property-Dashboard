@@ -41,7 +41,7 @@ export class ApartmentService {
 
   updateApartment(ApartmentId: any, Apartment: any): Observable<any> {
     return this.http.put<any>(
-      environment.Api + 'hotel/' + ApartmentId,
+      environment.Api + 'apartment/' + ApartmentId,
       Apartment,
       this.httpOptions
     );
@@ -262,6 +262,13 @@ export class ApartmentService {
     return this.http.put<any>(
       environment.Api + 'apartment/review/' + ApartmentId + '/' + reviewId,
       review,
+      this.httpOptions
+    );
+  }
+  createReplay(propId: any, messageId: any, replay: any): Observable<any> {
+    return this.http.post<any>(
+      environment.Api + 'apartment/message/replay/' + propId + '/' + messageId,
+      replay,
       this.httpOptions
     );
   }

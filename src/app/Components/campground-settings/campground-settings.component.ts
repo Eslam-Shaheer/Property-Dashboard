@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { CampgroundService } from 'src/app/Services/campground.service';
+import { CampgroundService } from './../../Services/campground.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  FormArray,
+} from '@angular/forms';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { UploadService } from 'src/app/Services/upload.service';
 
 @Component({
-  selector: 'app-campground-form',
-  templateUrl: './campground-form.component.html',
-  styleUrls: ['./campground-form.component.scss'],
+  selector: 'app-campground-settings',
+  templateUrl: './campground-settings.component.html',
+  styleUrls: ['./campground-settings.component.scss'],
 })
-export class CampgroundFormComponent implements OnInit {
+export class CampgroundSettingsComponent implements OnInit {
   uploadSub: any;
   uploadProgress!: number;
   progressInfos: any;
@@ -17,11 +27,13 @@ export class CampgroundFormComponent implements OnInit {
   campgroundImages: any[] = [];
   selectedFiles: any;
   previews!: any[];
-  imageInfos?: Observable<any>;
+  imageInfos: any[] = [];
+  images: any;
   constructor(
     private _formBuilder: FormBuilder,
     private upload: UploadService,
-    private campgroundService: CampgroundService
+    private campgroundService: CampgroundService,
+    private router: Router
   ) {}
 
   Campground = this._formBuilder.group({
@@ -74,6 +86,7 @@ export class CampgroundFormComponent implements OnInit {
       guestsNumber: [''],
       available: [true],
       smoking: [''],
+      bookings: [],
     });
   }
 
@@ -92,6 +105,7 @@ export class CampgroundFormComponent implements OnInit {
 
   uploadImg(idx: number, file: File): void {
     this.progressInfos[idx] = { value: 0, fileName: file.name };
+
     const formData = new FormData();
 
     formData.append('multiple_images', file);
@@ -103,8 +117,7 @@ export class CampgroundFormComponent implements OnInit {
           const msg = 'Uploaded the file successfully: ' + file.name;
           this.message.push(msg);
           this.campgroundImages.push(event.data[0]);
-          this.Campground.value.images = this.campgroundImages;
-          console.log(this.Campground.value);
+          this.imageInfos.push(event.data[0]);
         },
         (err: any) => {
           console.log(err);
@@ -142,16 +155,58 @@ export class CampgroundFormComponent implements OnInit {
       }
     }
   }
-  addCampground() {
-    this.campgroundService.creatCampGround(this.Campground.value).subscribe(
-      (result) => {
-        console.log(result);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
 
-  ngOnInit(): void {}
+  addCampground() {
+    this.Campground.value.images = this.imageInfos;
+    this.campgroundService
+      .updateCampGround('61a40c1b5f8735070e2b5d9b', this.Campground.value)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          if (result.success == true) this.router.navigate(['/complete/']);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+  property: any;
+  isLoading = false;
+  ngOnInit(): void {
+    this.campgroundService
+      .getCampGroundById('61a40c1b5f8735070e2b5d9b')
+      .subscribe((result) => {
+        console.log(result);
+        this.property = result.data;
+        this.Campground.patchValue(this.property);
+        for (let i = 1; i < this.property.rooms.length; i++) {
+          this.rooms.push(this.addRoomsFromApi(this.property.rooms[i]));
+        }
+        this.imageInfos = this.property.images;
+        this.isLoading = false;
+      });
+  }
+  deleteImage(index: number) {
+    for (let i = 0; i < this.imageInfos.length; i++) {
+      if (index == i) {
+        this.imageInfos.splice(i, 1);
+      }
+    }
+  }
+  addRoomsFromApi(room: any) {
+    return this._formBuilder.group({
+      roomName: [room.roomName],
+      type: [room.type],
+      customName: [room.customName],
+      numOfRoomOfThisType: [room.numOfRoomOfThisType],
+      roomSize: [room.roomSize],
+      price: [room.price],
+      bedType: [room.bedType],
+      bedsNumber: [room.bedsNumber],
+      guestsNumber: [room.guestsNumber],
+      available: [true],
+      smoking: [room.smoking],
+      bookings: [room.bookings || []],
+    });
+  }
 }

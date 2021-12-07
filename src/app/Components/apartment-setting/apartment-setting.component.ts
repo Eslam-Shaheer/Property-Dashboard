@@ -1,16 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { NavigationEnd } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ApartmentService } from 'src/app/Services/apartment.service';
+import { ApartmentService } from './../../Services/apartment.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  FormArray,
+} from '@angular/forms';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { UploadService } from 'src/app/Services/upload.service';
 
 @Component({
-  selector: 'app-apartment-form',
-  templateUrl: './apartment-form.component.html',
-  styleUrls: ['./apartment-form.component.scss'],
+  selector: 'app-apartment-setting',
+  templateUrl: './apartment-setting.component.html',
+  styleUrls: ['./apartment-setting.component.scss'],
 })
-export class ApartmentFormComponent implements OnInit {
+export class ApartmentSettingComponent implements OnInit {
   result: any;
   uploadSub: any;
   uploadProgress: any;
@@ -21,12 +30,13 @@ export class ApartmentFormComponent implements OnInit {
   apartmentImages: any[] = [];
   panelOpenState = false;
   panelOpenState2 = false;
-  imageInfos?: Observable<any>;
-
+  imageInfos: any[] = [];
+  isLoading = false;
   constructor(
     private _formBuilder: FormBuilder,
     private upload: UploadService,
-    private apartmentService: ApartmentService
+    private apartmentService: ApartmentService,
+    private router: Router
   ) {}
   Apartment = this._formBuilder.group({
     apartmentName: ['', Validators.required],
@@ -49,7 +59,7 @@ export class ApartmentFormComponent implements OnInit {
     facilities: this._formBuilder.group({
       general: ['', Validators.required],
       cookingAndCleaening: ['', Validators.required],
-      Entertainment: ['', Validators.required],
+      entertainment: ['', Validators.required],
       view: ['', Validators.required],
     }),
 
@@ -68,6 +78,54 @@ export class ApartmentFormComponent implements OnInit {
       bunkBed: [''],
       sofaBed: [''],
       futonBed: [''],
+    });
+  }
+  property: any;
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.apartmentService
+      .getApartmentbyId('61a3dd74bd981c8dd3ab0d8d')
+      .subscribe((apartment) => {
+        this.property = apartment.data;
+        this.Apartment.patchValue(this.property);
+
+        for (let i = 1; i < this.property.bedRooms.length; i++) {
+          this.bedRooms.push(
+            this.addBedRoomsFromApi(this.property.bedRooms[i])
+          );
+        }
+        for (let i = 1; i < this.property.livingRooms.length; i++) {
+          this.livingRooms.push(
+            this.addLivingRoomsFromApi(this.property.livingRooms[i])
+          );
+        }
+        this.Apartment.patchValue({ facilities: this.property.facilities });
+        console.log(this.property);
+        this.imageInfos = this.property.images;
+        this.isLoading = false;
+      });
+  }
+  deleteImage(index: number) {
+    for (let i = 0; i < this.imageInfos.length; i++) {
+      if (index == i) {
+        this.imageInfos.splice(i, 1);
+      }
+    }
+  }
+  addBedRoomsFromApi(room: any) {
+    return this._formBuilder.group({
+      twinBed: [room.twinBed],
+      fullBed: [room.fullBed],
+      queenBed: [room.queenBed],
+      kingBed: [room.kingBed],
+      bunkBed: [room.bunkBed],
+      sofaBed: [room.sofaBed],
+      futonBed: [room.futonBed],
+    });
+  }
+  addLivingRoomsFromApi(room: any) {
+    return this._formBuilder.group({
+      sofaBed: [room.sofaBed],
     });
   }
 
@@ -115,7 +173,7 @@ export class ApartmentFormComponent implements OnInit {
           const msg = 'Uploaded the file successfully: ' + file.name;
           this.message.push(msg);
           this.apartmentImages.push(event.data[0]);
-          this.Apartment.value.images = this.apartmentImages;
+          this.imageInfos.push(event.data[0]);
           console.log(this.Apartment.value);
         },
         (err: any) => {
@@ -153,15 +211,21 @@ export class ApartmentFormComponent implements OnInit {
     }
   }
   addApartment() {
-    this.apartmentService.creatApartment(this.Apartment.value).subscribe(
-      (result) => {
-        console.log(result);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
+    this.isLoading = true;
+    this.Apartment.value.images = this.imageInfos;
 
-  ngOnInit(): void {}
+    this.apartmentService
+      .updateApartment('61a3dd74bd981c8dd3ab0d8d', this.Apartment.value)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          if (result.success == true) this.router.navigate(['/complete/']);
+          this.isLoading = false;
+        },
+        (err) => {
+          console.log(err);
+          this.isLoading = false;
+        }
+      );
+  }
 }
